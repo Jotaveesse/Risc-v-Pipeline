@@ -27,6 +27,10 @@ module ALUController (
                         Operation = 4'b0101;
                     else if(Funct3 == 3'b111 && Funct7 == 7'b0000000)   //AND
                         Operation = 4'b0000;
+                    else if(Funct3 == 3'b110 && Funct7 == 7'b0000000)   //OR
+                        Operation = 4'b0001;
+                    else if(Funct3 == 3'b100 && Funct7 == 7'b0000000)   //XOR
+                        Operation = 4'b0010;
                     else
                         Operation = 4'b0000;
                 2'b11:

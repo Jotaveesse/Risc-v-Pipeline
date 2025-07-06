@@ -18,9 +18,9 @@ module alu#(
                 4'b0000:        // AND
                         ALUResult = SrcA & SrcB;
                 4'b0001:        // OR
-                        ALUResult = SrcA + SrcB;
+                        ALUResult = SrcA | SrcB;
                 4'b0010:        // XOR
-                        ALUResult = SrcA + SrcB;
+                        ALUResult = SrcA ^ SrcB;
                 4'b0100:        // ADD
                         ALUResult = SrcA + SrcB;
                 4'b0101:        // SUB
