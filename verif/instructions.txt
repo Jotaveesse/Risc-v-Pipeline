@@ -8,6 +8,8 @@ xor x7,x1,x2
 slli x8,x1,3
 srli x9,x4,3
 srai x10,x4,3
+slti x11,x1,24
+slt x12,x1,x2
 sw x1,4(x2)
-lw x11,15(x1)
-beq x11,x1,-8
+lw x16,15(x1)
+beq x16,x1,-8
