@@ -27,8 +27,12 @@ module alu#(
                         ALUResult = SrcA - SrcB;
                 4'b1000:        // Equal
                         ALUResult = (SrcA == SrcB) ? 1 : 0;
-                4'b1001:        // Less Than
+                4'b1001:        // Not Equal
+                        ALUResult = (SrcA != SrcB) ? 1 : 0;
+                4'b1010:        // Less Than
                         ALUResult = (SrcA < SrcB) ? 1 : 0;
+                4'b1011:        // Greater or Equal Than
+                        ALUResult = (SrcA >= SrcB) ? 1 : 0;
                 4'b1100:        // Shift Left Logico
                         ALUResult = SrcA << SrcB;
                 4'b1101:        // Shift Right Logico

@@ -16,7 +16,16 @@ module ALUController (
                 else
                     Operation = 4'b0000;
             2'b001:
+                if(Funct3 == 3'b000)    //BEQ
                     Operation = 4'b1000;
+                else if(Funct3 == 3'b001)    //BNE
+                    Operation = 4'b1001;
+                else if(Funct3 == 3'b100)    //BLT
+                    Operation = 4'b1010;
+                else if(Funct3 == 3'b101)    //BGE
+                    Operation = 4'b1011;
+                else
+                    Operation = 4'b0000;
             2'b010:
                 if(Funct3 == 3'b000 && Funct7 == 7'b0000000)   //ADD
                     Operation = 4'b0100;
@@ -29,7 +38,7 @@ module ALUController (
                 else if(Funct3 == 3'b100 && Funct7 == 7'b0000000)   //XOR
                     Operation = 4'b0010;
                 else if(Funct3 == 3'b010 && Funct7 == 7'b0000000)   //SLT
-                    Operation = 4'b1001;
+                    Operation = 4'b1010;
                 else
                     Operation = 4'b0000;
             2'b011:
