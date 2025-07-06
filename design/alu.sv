@@ -5,11 +5,11 @@ module alu#(
         parameter OPCODE_LENGTH = 4
         )
         (
-        input logic [DATA_WIDTH-1:0]    SrcA,
-        input logic [DATA_WIDTH-1:0]    SrcB,
+        input logic signed [DATA_WIDTH-1:0]    SrcA,
+        input logic signed [DATA_WIDTH-1:0]    SrcB,
 
         input logic [OPCODE_LENGTH-1:0]    Operation,
-        output logic[DATA_WIDTH-1:0] ALUResult
+        output logic signed [DATA_WIDTH-1:0] ALUResult
         );
     
         always_comb
@@ -27,6 +27,13 @@ module alu#(
                         ALUResult = SrcA - SrcB;
                 4'b1000:        // Equal
                         ALUResult = (SrcA == SrcB) ? 1 : 0;
+                4'b1100:        // Shift Left Logico
+                        ALUResult = SrcA << SrcB;
+                4'b1101:        // Shift Right Logico
+                        ALUResult = SrcA >> SrcB[4:0];
+                4'b1110:        // Shift Right Aritmetico
+                        ALUResult = SrcA >>> SrcB[4:0];
+                
             default:
                         ALUResult = 0;
             endcase

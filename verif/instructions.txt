@@ -1,10 +1,13 @@
 addi x1,x1,13
 addi x2,x1,11
 add x3,x2,x1
-sub x4,x2,x1
+sub x4,x1,x2
 and x5,x2,x1
 or x6,x1,x2
 xor x7,x1,x2
+slli x8,x1,3
+srli x9,x4,3
+srai x10,x4,3
 sw x1,4(x2)
-lw x10,15(x1)
-beq x10,x1,-8
+lw x11,15(x1)
+beq x11,x1,-8
