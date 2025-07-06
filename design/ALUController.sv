@@ -11,10 +11,7 @@ module ALUController (
     always_comb begin
         case(ALUOp)
             2'b000:
-                if(Funct3 == 3'b010)    //LW SW
-                    Operation = 4'b0100;
-                else
-                    Operation = 4'b0000;
+                    Operation = 4'b0100;  // LW/LH/LB/SW/SH/SB
             2'b001:
                 if(Funct3 == 3'b000)    //BEQ
                     Operation = 4'b1000;
