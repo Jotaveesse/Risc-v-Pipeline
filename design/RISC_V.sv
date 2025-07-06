@@ -19,7 +19,8 @@ module riscv #(
 );
 
   logic [6:0] opcode;
-  logic ALUSrc, MemtoReg, RegWrite, MemRead, MemWrite, Branch;
+  logic ALUSrc, RegWrite, MemRead, MemWrite, Branch, Jal_Sel, Jalr_Sel;
+  logic [1:0] MemtoReg;
   logic [2:0] ALUop;
   logic [2:0] ALUop_Reg;
   logic [6:0] Funct7;
@@ -34,7 +35,9 @@ module riscv #(
       MemRead,
       MemWrite,
       ALUop,
-      Branch
+      Branch,
+      Jal_Sel,
+      Jalr_Sel
   );
 
   ALUController ac (
@@ -45,29 +48,31 @@ module riscv #(
   );
 
   Datapath dp (
-      clk,
-      reset,
-      RegWrite,
-      MemtoReg,
-      ALUSrc,
-      MemWrite,
-      MemRead,
-      Branch,
-      ALUop,
-      Operation,
-      opcode,
-      Funct7,
-      Funct3,
-      ALUop_Reg,
-      WB_Data,
-      reg_num,
-      reg_data,
-      reg_write_sig,
-      wr,
-      rd,
-      addr,
-      wr_data,
-      rd_data
+    clk,
+    reset,
+    RegWrite,
+    MemtoReg,
+    ALUSrc,
+    MemWrite,
+    MemRead,
+    Branch,
+    Jal_Sel,
+    Jalr_Sel,
+    ALUop,
+    Operation,
+    opcode,
+    Funct7,
+    Funct3,
+    ALUop_Reg,
+    WB_Data,
+    reg_num,
+    reg_data,
+    reg_write_sig,
+    wr,
+    rd,
+    addr,
+    wr_data,
+    rd_data
   );
 
 endmodule

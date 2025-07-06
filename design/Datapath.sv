@@ -13,11 +13,14 @@ module Datapath #(
     input  logic                 clk,
     reset,
     RegWrite,
-    MemtoReg,  // Register file writing enable   // Memory or ALU MUX
-    ALUsrc,
+    input  logic [          1:0] MemtoReg,  // Register file writing enable   // Memory or ALU MUX
+    input  logic ALUsrc,
     MemWrite,  // Register file or Immediate MUX // Memroy Writing Enable
     MemRead,  // Memroy Reading Enable
     Branch,  // Branch Enable
+    Jal_Sel, 
+    Jalr_Sel,
+    
     input  logic [          2:0] ALUOp,
     input  logic [ALU_CC_W -1:0] ALU_CC,         // ALU Control Code ( input of the ALU )
     output logic [          6:0] opcode,
@@ -141,6 +144,8 @@ module Datapath #(
       B.MemWrite <= 0;
       B.ALUOp <= 0;
       B.Branch <= 0;
+      B.Jal_Sel <= 0;
+      B.Jalr_Sel <= 0;
       B.Curr_Pc <= 0;
       B.RD_One <= 0;
       B.RD_Two <= 0;
@@ -159,6 +164,8 @@ module Datapath #(
       B.MemWrite <= MemWrite;
       B.ALUOp <= ALUOp;
       B.Branch <= Branch;
+      B.Jal_Sel <= Jal_Sel;
+      B.Jalr_Sel <= Jalr_Sel;
       B.Curr_Pc <= A.Curr_Pc;
       B.RD_One <= Reg1;
       B.RD_Two <= Reg2;
@@ -221,6 +228,8 @@ module Datapath #(
       B.Curr_Pc,
       B.ImmG,
       B.Branch,
+      B.Jal_Sel,
+      B.Jalr_Sel,
       ALUResult,
       BrImm,
       Old_PC_Four,
@@ -304,9 +313,11 @@ module Datapath #(
   end
 
   //--// The LAST Block
-  mux2 #(32) resmux (
+  mux4 #(32) resmux (
       D.Alu_Result,
       D.MemReadData,
+      D.Pc_Four,
+      32'b0,
       D.MemtoReg,
       WrmuxSrc
   );
