@@ -67,6 +67,7 @@ opcode = {
  "sra": "0110011",
  "or": "0110011",
  "and": "0110011",
+ "halt": "1111111",
 }
 
 # bits 12-14
@@ -211,10 +212,11 @@ def translate(instruction):
 
 # translates an instruction to binary (assembly to machine code)
 def translate_instruction(instruction):
-	instr = instruction.split(" ")[0]
+	instr = instruction.rstrip().split(" ")[0]
 
-	rd = instruction.split(" ")[1].split(",")[0]
-	rd = bin(int(rd[1:]))[2:].zfill(5)
+	if(instr != "halt"):
+		rd = instruction.split(" ")[1].split(",")[0]
+		rd = bin(int(rd[1:]))[2:].zfill(5)
 
 	if (instr == "lui" or instr == "auipc"):
 		imm = instruction.split(" ")[1].split(",")[1]
@@ -258,8 +260,8 @@ def translate_instruction(instruction):
 		imm = imm[::-1]
 
 		bit12 = imm[12]
-		bit10to5 = (imm[5:10])[::-1]
-		bit4to1 = (imm[1:4])[::-1]
+		bit10to5 = (imm[5:11])[::-1]
+		bit4to1 = (imm[1:5])[::-1]
 		bit11 = imm[11]
 
 		binary = sfill((bit12 + bit10to5), 7) + rs2 + rs1 + funct3[instr] + sfill(
@@ -290,8 +292,8 @@ def translate_instruction(instruction):
 		imm = sfill(sbin(imm)[0:11], 12)
 		imm = imm[::-1]
 
-		bit11to5 = (imm[5:11])[::-1]
-		bit4to0 = (imm[0:4])[::-1]
+		bit11to5 = (imm[5:12])[::-1]
+		bit4to0 = (imm[0:5])[::-1]
 
 		binary = sfill(bit11to5, 7) + rs2 + rs1 + funct3[instr] + sfill(
 		 bit4to0, 5) + opcode[instr]
@@ -325,6 +327,9 @@ def translate_instruction(instruction):
 		rs2 = bin(int(rs2[1:]))[2:].zfill(5)
 
 		binary = funct7[instr] + rs2 + rs1 + funct3[instr] + rd + opcode[instr]
+	
+	elif (instr == "halt"):
+		binary = opcode[instr].zfill(32)
 
 	return binary
 

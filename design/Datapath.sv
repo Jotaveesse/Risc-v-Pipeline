@@ -20,6 +20,7 @@ module Datapath #(
     Branch,  // Branch Enable
     Jal_Sel, 
     Jalr_Sel,
+    Halt,
     
     input  logic [          2:0] ALUOp,
     input  logic [ALU_CC_W -1:0] ALU_CC,         // ALU Control Code ( input of the ALU )
@@ -41,7 +42,7 @@ module Datapath #(
     output logic [DATA_W-1:0] rd_data  // read data
 );
 
-  logic [PC_W-1:0] PC, PCPlus4, Next_PC;
+  logic [PC_W-1:0] PC, PCPlus4, Next_PC, Selected_PC;
   logic [INS_W-1:0] Instr;
   logic [DATA_W-1:0] Reg1, Reg2;
   logic [DATA_W-1:0] ReadData;
@@ -70,6 +71,12 @@ module Datapath #(
       PCPlus4,
       BrPC[PC_W-1:0],
       PcSel,
+      Selected_PC
+  );
+  mux2 #(9) haltpcmux (
+      Selected_PC,
+      A.Curr_Pc,
+      Halt,
       Next_PC
   );
   flopr #(9) pcreg (
@@ -92,7 +99,7 @@ module Datapath #(
       A.Curr_Pc <= 0;
       A.Curr_Instr <= 0;
     end
-        else if (!Reg_Stall)    // stall
+        else if (!Reg_Stall && !Halt)    // stall
         begin
       A.Curr_Pc <= PC;
       A.Curr_Instr <= Instr;
@@ -135,7 +142,7 @@ module Datapath #(
 
   // ID_EX_Reg B;
   always @(posedge clk) begin
-    if ((reset) || (Reg_Stall) || (PcSel))   // initialization or flush or generate a NOP if hazard
+    if ((reset) || (Reg_Stall) || (PcSel) || (Halt))   // initialization or flush or generate a NOP if hazard
         begin
       B.ALUSrc <= 0;
       B.MemtoReg <= 0;
