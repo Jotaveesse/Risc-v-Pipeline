@@ -230,9 +230,9 @@ def translate_instruction(instruction):
 		imm = imm[::-1]
 
 		bit20 = imm[19]
-		bit10to1 = (imm[0:9])[::-1]
+		bit10to1 = (imm[0:10])[::-1]
 		bit11 = imm[10]
-		bit19to12 = (imm[11:18])[::-1]
+		bit19to12 = (imm[11:19])[::-1]
 
 		imm = sfill((bit20 + bit10to1 + bit11 + bit19to12), 20)
 
