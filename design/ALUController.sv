@@ -42,7 +42,7 @@ module ALUController (
                     if(Funct3 == 3'b000)    //ADDI
                         Operation = 4'b0100;
                     else if(Funct3 == 3'b010)   //SLTI
-                        Operation = 4'b1001;
+                        Operation = 4'b1010;
                     else if(Funct3 == 3'b001 && Funct7 == 7'b0000000)   //SLLI
                     Operation = 4'b1100;
                     else if(Funct3 == 3'b101 && Funct7 == 7'b0000000)   //SRLI
