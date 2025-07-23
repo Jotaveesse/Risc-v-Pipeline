@@ -47,21 +47,29 @@ module datamemory #(
         default: rd <= Dataout;
       endcase
     end else if (MemWrite) begin
+      case (a[1:0])
+        2'b00:
+          Wr = 4'b0001;
+        2'b01:
+          Wr = 4'b0010;
+        2'b10:
+          Wr = 4'b0100;
+        2'b11:
+          Wr = 4'b1000;
+        default: Wr = 4'b0000;
+      endcase
+
       case (Funct3)
         3'b000: begin  //SB
-          Wr <= 4'b1111;
           Datain <= {{24{wd[31]}}, wd[7:0]};
         end
         3'b001: begin  //SH
-          Wr <= 4'b1111;
           Datain <= {{16{wd[31]}}, wd[15:0]};
         end
         3'b010: begin  //SW
-          Wr <= 4'b1111;
           Datain <= wd;
         end
         default: begin
-          Wr <= 4'b1111;
           Datain <= wd;
         end
       endcase
