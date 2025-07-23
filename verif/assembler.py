@@ -226,13 +226,13 @@ def translate_instruction(instruction):
 
 	elif (instr == "jal"):
 		imm = instruction.split(" ")[1].split(",")[1]
-		imm = sfill(sbin(imm)[0:20], 20)
+		imm = sfill(sbin(imm)[0:21], 21)
 		imm = imm[::-1]
 
-		bit20 = imm[19]
-		bit10to1 = (imm[0:10])[::-1]
-		bit11 = imm[10]
-		bit19to12 = (imm[11:19])[::-1]
+		bit20 = imm[20]
+		bit10to1 = (imm[1:11])[::-1]
+		bit11 = imm[11]
+		bit19to12 = (imm[12:20])[::-1]
 
 		imm = sfill((bit20 + bit10to1 + bit11 + bit19to12), 20)
 
