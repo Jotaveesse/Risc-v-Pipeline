@@ -1,11 +1,13 @@
 # Infraestrutura de Hardware - Projeto RISC-V Pipeline 🚀
 
 Este repositório contém os arquivos base para o projeto da disciplina Infraestrutura de Hardware (IF674) no CIn-UFPE. O objetivo do projeto é implementar instruções em um processador RISC-V usando SystemVerilog.
-
 ---
 ## Integrantes
 
 João Victor da Silva - jvs2
+
+## Relatório
+[Relatório do Projeto](https://docs.google.com/document/d/1c0MbW-S0bkwdVza1JvYcW8Gxse4U6rB4UXfJGRMUB68)
 
 ## 📝 Instruções
 
