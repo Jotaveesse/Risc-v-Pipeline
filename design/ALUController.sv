@@ -2,7 +2,7 @@
 
 module ALUController (
     //Inputs
-    input logic [2:0] ALUOp,  // 3-bit opcode field from the Controller--000: LW/SW/AUIPC; 001:Branch; 010: Rtype; 011:Itype
+    input logic [2:0] ALUOp,  // 3-bit opcode field from the Controller--000: LW/SW/AUIPC; 001:Branch; 010: Rtype; 011:Itype; 100: JAL/JALR
     input logic [6:0] Funct7,  // bits 25 to 31 of the instruction
     input logic [2:0] Funct3,  // bits 12 to 14 of the instruction
     //Output
@@ -10,9 +10,9 @@ module ALUController (
 );
     always_comb begin
         case(ALUOp)
-            2'b000:
-                    Operation = 4'b0100;  // LW/LH/LB/SW/SH/SB
-            2'b001:
+            3'b000:
+                Operation = 4'b0100;  // LW/LH/LB/SW/SH/SB
+            3'b001:
                 if(Funct3 == 3'b000)    //BEQ
                     Operation = 4'b1000;
                 else if(Funct3 == 3'b001)    //BNE
@@ -23,7 +23,7 @@ module ALUController (
                     Operation = 4'b1011;
                 else
                     Operation = 4'b0000;
-            2'b010:
+            3'b010:
                 if(Funct3 == 3'b000 && Funct7 == 7'b0000000)   //ADD
                     Operation = 4'b0100;
                 else if(Funct3 == 3'b000 && Funct7 == 7'b0100000)   //SUB
@@ -38,7 +38,7 @@ module ALUController (
                     Operation = 4'b1010;
                 else
                     Operation = 4'b0000;
-            2'b011:
+            3'b011:
                     if(Funct3 == 3'b000)    //ADDI
                         Operation = 4'b0100;
                     else if(Funct3 == 3'b010)   //SLTI
@@ -51,8 +51,10 @@ module ALUController (
                         Operation = 4'b1110;
                     else
                         Operation = 4'b0000;
+            3'b100:
+                Operation = 4'b0100;
             default:
-                    Operation = 4'b0000;
+                Operation = 4'b0000;
         endcase
     end
 endmodule

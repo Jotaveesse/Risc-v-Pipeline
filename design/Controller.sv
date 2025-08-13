@@ -41,7 +41,7 @@ module Controller (
   assign MemWrite = (Opcode == SAVES);
   assign ALUOp[0] = (Opcode == BR || Opcode == I_TYPE);
   assign ALUOp[1] = (Opcode == R_TYPE || Opcode == I_TYPE);
-  assign ALUOp[2] = Opcode == JAL;
+  assign ALUOp[2] = (Opcode == JAL || Opcode == JALR);
   assign Branch = (Opcode == BR);
   assign Jal_Sel = (Opcode == JAL);
   assign Jalr_Sel = (Opcode == JALR);

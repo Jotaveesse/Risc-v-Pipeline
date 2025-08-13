@@ -1,10 +1,9 @@
 addi x1,x1,13
-jal x22,140
+jal x22,144
 addi x2,x1,11
 add x3,x2,x1
 sub x4,x1,x2
 and x5,x2,x1
-halt
 or x6,x1,x2
 xor x7,x1,x2
 slli x8,x1,3
@@ -35,4 +34,5 @@ blt x2,x1,8
 addi x21,x21,4
 bge x1,x2,8
 addi x21,x21,8
+halt
 jalr x23,x22,0
